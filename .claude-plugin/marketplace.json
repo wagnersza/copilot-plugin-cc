@@ -1,0 +1,21 @@
+{
+  "name": "github-copilot",
+  "owner": {
+    "name": "GitHub"
+  },
+  "metadata": {
+    "description": "Copilot plugins to use in Claude Code for delegation and code review.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "copilot",
+      "description": "Use Copilot from Claude Code to review code or delegate tasks.",
+      "version": "1.0.0",
+      "author": {
+        "name": "GitHub"
+      },
+      "source": "./plugins/copilot"
+    }
+  ]
+}
