@@ -156,7 +156,11 @@ export function parseStructuredOutput(rawOutput, fallback = {}) {
 
 export function buildPersistentTaskSessionId(prompt) {
   const excerpt = shorten(prompt, 56);
-  return excerpt ? `${TASK_SESSION_PREFIX}: ${excerpt}` : TASK_SESSION_PREFIX;
+  const slug = excerpt
+    ? excerpt.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")
+    : "";
+  const prefix = TASK_SESSION_PREFIX.toLowerCase().replace(/\s+/g, "-");
+  return slug ? `${prefix}-${slug}` : prefix;
 }
 
 export { DEFAULT_CONTINUE_PROMPT, TASK_SESSION_PREFIX, SESSION_ID_ENV };
