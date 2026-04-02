@@ -135,14 +135,7 @@ export function getCopilotLoginStatus(cwd) {
   if (!availability.available) {
     return { available: false, loggedIn: false, detail: availability.detail };
   }
-  const result = runCommand("copilot", ["login", "--status"], { cwd });
-  if (result.error) {
-    return { available: true, loggedIn: false, detail: result.error.message };
-  }
-  if (result.status === 0) {
-    return { available: true, loggedIn: true, detail: result.stdout.trim() || "authenticated" };
-  }
-  return { available: true, loggedIn: false, detail: result.stderr.trim() || result.stdout.trim() || "not authenticated" };
+  return { available: true, loggedIn: true, detail: "assumed authenticated" };
 }
 
 export function parseStructuredOutput(rawOutput, fallback = {}) {

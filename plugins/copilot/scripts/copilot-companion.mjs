@@ -250,9 +250,6 @@ function ensureCopilotReady(cwd) {
   if (!authStatus.available) {
     throw new Error("Copilot CLI is not installed or is missing required runtime support. Install it with `npm install -g @github/copilot-cli`, then rerun `/copilot:setup`.");
   }
-  if (!authStatus.loggedIn) {
-    throw new Error("Copilot CLI is not authenticated. Run `!copilot login` and retry.");
-  }
 }
 
 function renderStatusPayload(report, asJson) {
@@ -954,6 +951,11 @@ async function main() {
 
 main().catch((error) => {
   const message = error instanceof Error ? error.message : String(error);
-  process.stderr.write(`${message}\n`);
+  const isAuthError = /auth|login|unauthenticated|unauthorized|not signed in|credentials/i.test(message);
+  if (isAuthError) {
+    process.stderr.write(`Copilot authentication failed. Run \`!copilot login\` to authenticate and retry.\n`);
+  } else {
+    process.stderr.write(`${message}\n`);
+  }
   process.exitCode = 1;
 });

@@ -58,12 +58,11 @@ function buildStopReviewPrompt(input = {}) {
 
 function buildSetupNote(cwd) {
   const copilotStatus = getCopilotLoginStatus(cwd);
-  if (copilotStatus.available && copilotStatus.loggedIn) {
-    return null;
+  if (!copilotStatus.available) {
+    const detail = copilotStatus.detail ? ` ${copilotStatus.detail}.` : "";
+    return `Copilot is not installed for the review gate.${detail} Run /copilot:setup to install it.`;
   }
-
-  const detail = copilotStatus.detail ? ` ${copilotStatus.detail}.` : "";
-  return `Copilot is not set up for the review gate.${detail} Run /copilot:setup and, if needed, !copilot login.`;
+  return null;
 }
 
 function parseStopReviewOutput(rawOutput) {
